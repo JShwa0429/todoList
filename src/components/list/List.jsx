@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Card } from "../card";
-const List = ({ todos, onRemove, onComplete, onCancel }) => {
+const List = ({ todos }) => {
   return (
     <Container>
       <h2>Working.. 🔥</h2>
@@ -8,30 +8,14 @@ const List = ({ todos, onRemove, onComplete, onCancel }) => {
         {todos &&
           todos
             .filter((v) => v.isDone === false)
-            .map((v) => (
-              <Card
-                key={v.id}
-                todo={v}
-                onRemove={onRemove}
-                onComplete={onComplete}
-                onCancel={onCancel}
-              />
-            ))}
+            .map((v) => <Card key={v.id} todo={v} />)}
       </Wrapper>
       <h2>Done..! 🎉</h2>
       <Wrapper>
         {todos &&
           todos
             .filter((v) => v.isDone === true)
-            .map((v) => (
-              <Card
-                key={v.id}
-                todo={v}
-                onRemove={onRemove}
-                onComplete={onComplete}
-                onCancel={onCancel}
-              />
-            ))}
+            .map((v) => <Card key={v.id} todo={v} />)}
       </Wrapper>
     </Container>
   );

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { Title } from "../title";
 import { Form } from "../form";
-const Header = ({ onAdd }) => {
+const Header = () => {
   return (
     <DivHeader>
       <Title />
-      <Form onAdd={onAdd} />
+      <Form />
     </DivHeader>
   );
 };

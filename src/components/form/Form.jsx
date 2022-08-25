@@ -1,20 +1,19 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearInput, saveInput } from "../../slices/inputSlice";
+import { saveData } from "../../slices/dataSlice";
 
-const Form = ({ onAdd }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+const Form = () => {
+  const { title, content } = useSelector((state) => state.input);
+  const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handleAdd = () => {
     if (!title || !content) {
       return alert("제목과 내용을 입력해주세요");
     }
-    onAdd(title, content);
-    console.log("흠");
-    setTitle("");
-    setContent("");
+    dispatch(saveData(title, content));
+    dispatch(clearInput());
   };
-
   return (
     <InputForm>
       <InputDiv>
@@ -22,16 +21,16 @@ const Form = ({ onAdd }) => {
         <Input
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => dispatch(saveInput(e.target.value, content))}
         />
         <label>내용</label>
         <Input
           type="text"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => dispatch(saveInput(title, e.target.value))}
         />
       </InputDiv>
-      <Button type="button" onClick={handleSubmit}>
+      <Button type="button" onClick={handleAdd}>
         추가하기
       </Button>
     </InputForm>
@@ -49,7 +48,6 @@ const InputForm = styled.form`
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  margin: 4px;
 
   label {
     font-size: 16px;

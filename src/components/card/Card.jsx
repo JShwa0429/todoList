@@ -1,8 +1,17 @@
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { deleteData, toggleData } from "../../slices/dataSlice";
 
-const Card = ({ todo, onRemove, onComplete, onCancel }) => {
+const Card = ({ todo }) => {
+  const handleClear = () => {};
+  const dispatch = useDispatch();
+
   return (
     <DivCard>
+      <Link to={`/${todo.id}`} onClick={() => handleClear()}>
+        상세보기
+      </Link>
       <div>
         <h2>{todo.title}</h2>
         <div>{todo.content}</div>
@@ -10,28 +19,18 @@ const Card = ({ todo, onRemove, onComplete, onCancel }) => {
           <button
             type="button"
             className="remove"
-            onClick={() => onRemove(todo.id)}
+            onClick={() => dispatch(deleteData(todo.id))}
           >
             삭제하기
           </button>
 
-          {todo.isDone ? (
-            <button
-              type="button"
-              className="done"
-              onClick={() => onCancel(todo.id)}
-            >
-              취소
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="done"
-              onClick={() => onComplete(todo.id)}
-            >
-              완료
-            </button>
-          )}
+          <button
+            type="button"
+            className="done"
+            onClick={() => dispatch(toggleData(todo.id))}
+          >
+            {todo.isDone ? "취소" : "완료"}
+          </button>
         </DivButton>
       </div>
     </DivCard>
